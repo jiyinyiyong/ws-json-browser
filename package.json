@@ -1,0 +1,24 @@
+{
+  "name": "ws-json",
+  "version": "0.0.1",
+  "description": "ws-json adds a little abstraction to websocket",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chokidar": "~0.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jiyinyiyong/ws-json-client.git"
+  },
+  "keywords": [
+    "websocket",
+    "json"
+  ],
+  "author": "jiyinyiyong",
+  "license": "BSD",
+  "readmeFilename": "readme.md"
+}
