@@ -1,15 +1,13 @@
 
-ws = require("./index")
+client = require("./index")
 
-ws.connect "localhost", 3000
-ws.onopen -> console.log "opened"
+client.connect "localhost", 3000, (ws) ->
 
-ws.on "greet", (data) -> console.log data
+  ws.emit 'greet', text: 'nothing'
 
-ws.on "delay", (data) -> console.log "delay", data
+  ws.on "repeat", (data) ->
+    setTimeout (-> ws.emit "repeat", data), 1000
+    console.log "have data", data
 
-setTimeout (-> ws.emit "call", "from client"), 1000
-
-ws.on "repeat", (data) ->
-  setTimeout (-> ws.emit "repeat", data), 1000
-  console.log "have data", data
+  ws.onclose ->
+    console.log 'server disturbed'

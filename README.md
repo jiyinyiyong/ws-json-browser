@@ -16,25 +16,22 @@ npm install ws-json-browser
 ```coffee
 ws = require "ws-json-browser"
 
-ws.connect "localhost", 3000
+client.connect "localhost", 3000, (ws) ->
 
-ws.onopen -> console.log "opened"
-ws.onopen -> console.log "opened"
+  ws.emit 'greet', text: 'nothing'
 
-ws.on "greet", (data) -> console.log data
+  ws.on "repeat", (data) ->
+    setTimeout (-> ws.emit "repeat", data), 1000
+    console.log "have data", data
 
-ws.on "delay", (data) -> console.log "delay", data
-
-setTimeout (-> ws.emit "call", "from client"), 1000
-
-ws.on "repeat", (data) ->
-  ws.emit "repeat", data
-  console.log "have data", data
+  ws.onclose ->
+    console.log 'server disturbed'
 ```
 
 ### API
 
-* `ws.connect`: `port`
+* `ws.connect`: `domain, port, (ws) ->`,
+`domain` is optional and defaults to be `location.hostname`
 * `ws.onopen`: `->`
 * `ws.onclose`: `->`
 * `ws.on`: `key, (value) ->`

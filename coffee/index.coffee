@@ -1,14 +1,19 @@
 
-module.exports = ws = {}
-
-routes = {}
-ws.on = (key, callback) -> routes[key] = callback
-
-ws.connect = (domain, port) ->
-  # domain = domain[...-1] while domain[-1..] is "/"
-  if not port?
-    port = Number domain
+exports.connect = (args...) ->
+  if args.length is 3
+    domain = args[0]
+    port = args[1]
+    handle = args[2]
+  else if args.length is 2
     domain = location.hostname
+    port = args[0]
+    handle = args[1]
+  else
+    throw new Error "WS-JSON: wrong args: #{args}"
+
+  routes = {}
+  ws = {}
+  ws.on = (key, callback) -> routes[key] = callback
   socket = new WebSocket "ws://#{domain}:#{port}"
 
   ws.emit = (key, value) ->
@@ -20,10 +25,6 @@ ws.connect = (domain, port) ->
   socket.onmessage = (event) ->
     data = JSON.parse event.data
     routes[data[0]]? data[1]
-
-  openCalls = []
-  ws.onopen = (callback) -> openCalls.push callback
-  socket.onopen = -> callback() for callback in openCalls
   
   closeCalls = []
   ws.closed = no
@@ -32,6 +33,5 @@ ws.connect = (domain, port) ->
     ws.closed = yes
     callback() for callback in closeCalls
 
-  ws
-
-module
+  socket.onopen = ->
+    handle ws
