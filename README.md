@@ -32,7 +32,6 @@ client.connect "localhost", 3000, (ws) ->
 
 * `ws.connect`: `domain, port, (ws) ->`,
 `domain` is optional and defaults to be `location.hostname`
-* `ws.onopen`: `->`
 * `ws.onclose`: `->`
 * `ws.on`: `key, (value) ->`
 * `ws.emit`: `key, value`
