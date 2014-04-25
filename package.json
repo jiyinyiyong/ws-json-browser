@@ -1,24 +1,22 @@
 {
-  "name": "ws-json",
-  "version": "0.0.1",
-  "description": "ws-json adds a little abstraction to websocket",
-  "main": "lib/index.js",
+  "name": "ws-json-browser",
+  "version": "0.0.2-0",
+  "description": "EventEmitter like API for WebSocket, in browser-side.",
+  "main": "js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make compile"
   },
   "dependencies": {},
-  "devDependencies": {
-    "chokidar": "~0.6.2"
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git://github.com/jiyinyiyong/ws-json-client.git"
+    "url": "git://github.com/jiyinyiyong/ws-json-browser.git"
   },
   "keywords": [
     "websocket",
     "json"
   ],
   "author": "jiyinyiyong",
-  "license": "BSD",
-  "readmeFilename": "readme.md"
+  "license": "MIT",
+  "readmeFilename": "README.md"
 }
