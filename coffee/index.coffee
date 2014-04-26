@@ -37,12 +37,28 @@ exports.connect = (args...) ->
     routes[key]? value, (ret) -> send [key, ret, id]
     emitCalls[id]? value
 
+
+  affairs = []
+  ws.listenTo = (source, affair, callback) ->
+    affairs.push {source, affair, callback}
+    source.on affair, callback
+
   closeCalls = []
   ws.closed = no
   ws.onclose = (callback) -> closeCalls.push callback
   socket.onclose = ->
     ws.closed = yes
     callback() for callback in closeCalls
+
+    for pair in affairs
+      {source, affair, callback} = pair
+      source.removeListener affair, callback
+
+    ws = null
+    socket = null
+    routes = null
+    emitCalls = null
+    affairs = null
 
   socket.onopen = ->
     handle ws

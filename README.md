@@ -56,6 +56,13 @@ When close:
 * `ws.onclose`: `->`
 * `ws.closed`
 
+Since there might be lots of connections and many instances of `ws`.
+`ws` objects may fail to be garbage collected.
+To stay away from memory leak, a solution from Backbone.
+
+* `ws.listenTo`: `source, eventName, (value) ->`,
+it uses `.removeListener()` internally
+
 ### Development
 
 Read `make.coffee` for more.
