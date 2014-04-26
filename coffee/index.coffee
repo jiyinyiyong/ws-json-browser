@@ -1,4 +1,6 @@
 
+u = n: 0, id: -> "b#{@n += 1}"
+
 exports.connect = (args...) ->
   if args.length is 3
     domain = args[0]
@@ -11,21 +13,27 @@ exports.connect = (args...) ->
   else
     throw new Error "WS-JSON: wrong args: #{args}"
 
-  routes = {}
-  ws = {}
-  ws.on = (key, callback) -> routes[key] = callback
   socket = new WebSocket "ws://#{domain}:#{port}"
+  ws = closed: no
 
-  ws.emit = (key, value) ->
-    if ws.closed
-      console.log 'WS-JSON: emit when closed'
-      return
-    socket.send JSON.stringify [key, value]
+  send = (data) ->
+    return console.log 'WS-JSON: aleady closed' if ws.closed
+    socket.send (JSON.stringify data)
+  
+  routes = {}
+  ws.on = (key, callback) -> routes[key] = callback
+
+  emitCalls = {}
+  ws.emit = (key, value, callback) ->
+    id = u.id()
+    send [key, value, id]
+    emitCalls[id] = callback
 
   socket.onmessage = (event) ->
-    data = JSON.parse event.data
-    routes[data[0]]? data[1]
-  
+    [key, value, id] = JSON.parse event.data
+    routes[key]? value, (ret) -> send [key, ret, id]
+    emitCalls[id]? value
+
   closeCalls = []
   ws.closed = no
   ws.onclose = (callback) -> closeCalls.push callback

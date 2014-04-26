@@ -18,11 +18,18 @@ ws = require "ws-json-browser"
 
 client.connect "localhost", 3000, (ws) ->
 
-  ws.emit 'greet', text: 'nothing'
+  ws.emit 'greet', 'hello server', (data) ->
+    console.log 'server returns:', data
 
-  ws.on "repeat", (data) ->
-    setTimeout (-> ws.emit "repeat", data), 1000
-    console.log "have data", data
+  ws.on 'welcome', (data, res) ->
+    console.log 'server say:', data
+    res 'got it'
+
+  ws.on "repeat", (data, res) ->
+    setTimeout (-> res data), 2000
+    console.log "repeat", data
+
+  ws.emit 'repeat', 20
 
   ws.onclose ->
     console.log 'server disturbed'
@@ -30,16 +37,22 @@ client.connect "localhost", 3000, (ws) ->
 
 ### API
 
+Connect to server:
+
 * `ws.connect`: `domain, port, (ws) ->`,
 `domain` is optional and defaults to be `location.hostname`
+
+Communication is based on `[key, value, id]`:
+
+* `ws.emit`: `key, value, (data) ->`,
+`data` is what server callbacked
+* `ws.on`: `key, (value, res) ->`,
+`res` can be used like `res value` to send data back
+
+When close:
+
 * `ws.onclose`: `->`
-* `ws.on`: `key, (value) ->`
-* `ws.emit`: `key, value`
 * `ws.closed`
-
-### Protocol
-
-This implementation is simple, just using `[key, value]` as JSON.
 
 ### Development
 

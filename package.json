@@ -1,13 +1,15 @@
 {
   "name": "ws-json-browser",
-  "version": "0.0.2-2",
+  "version": "0.0.3",
   "description": "EventEmitter like API for WebSocket, in browser-side.",
   "main": "js/index.js",
   "scripts": {
     "test": "make compile"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "exorcist": "^0.1.6"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/jiyinyiyong/ws-json-browser.git"
