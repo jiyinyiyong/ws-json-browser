@@ -25,6 +25,7 @@ exports.connect = (args...) ->
 
   emitCalls = {}
   ws.emit = (key, value, callback) ->
+    callback = value unless callback?
     id = u.id()
     send [key, value, id]
     emitCalls[id] = callback
