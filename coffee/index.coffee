@@ -25,7 +25,7 @@ exports.connect = (args...) ->
 
   emitCalls = {}
   ws.emit = (key, value, callback) ->
-    unless callback?
+    if typeof value is 'function'
       callback = value
       value = null
     id = u.id()

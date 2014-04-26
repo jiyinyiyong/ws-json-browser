@@ -45,8 +45,8 @@ Connect to server:
 Communication is based on `[key, value, id]`:
 
 * `ws.emit`: `key, value, (data) ->`,
-`value` is optional,
-`data` is what server callbacked
+`data` is what server callbacked,
+both `value` and data are optional.
 
 * `ws.on`: `key, (value, res) ->`,
 `res` can be used like `res value` to send data back
