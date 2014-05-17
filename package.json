@@ -1,6 +1,6 @@
 {
   "name": "ws-json-browser",
-  "version": "0.0.4-3",
+  "version": "0.0.4-4",
   "description": "EventEmitter like API for WebSocket, in browser-side.",
   "main": "js/index.js",
   "scripts": {

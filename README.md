@@ -14,7 +14,7 @@ npm install ws-json-browser
 ```
 
 ```coffee
-ws = require "ws-json-browser"
+client = require "ws-json-browser"
 
 client.connect "localhost", 3000, (ws) ->
 
@@ -39,7 +39,7 @@ client.connect "localhost", 3000, (ws) ->
 
 Connect to server:
 
-* `ws.connect`: `domain, port, (ws) ->`,
+* `client.connect`: `domain, port, (ws) ->`,
 `domain` is optional and defaults to be `location.hostname`
 
 Communication is based on `[key, value, id]`:
