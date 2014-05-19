@@ -1,5 +1,5 @@
 
-u = n: 0, id: -> "b#{@n += 1}"
+{WS} = require './ws'
 
 exports.connect = (args...) ->
   if args.length is 3
