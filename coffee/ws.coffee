@@ -20,7 +20,11 @@ exports.WS = class
     @_socket.send (JSON.stringify data)
 
   on: (key, cb) ->
-    @_routes[key] = cb
+    unless @_routes[key]?
+      @_routes[key] = []
+    queue = @_routes[key]
+    unless cb in queue
+      queue.push cb
 
   emit: (key, value, cb) ->
     if typeof value is 'function'
@@ -39,7 +43,9 @@ exports.WS = class
 
   _handleMessage: (message) ->
     [key, value, id] = JSON.parse message.data
-    @_routes[key]? value, (ret) => @_send [key, ret, id]
+    if @_routes[key]?
+      for cb in @_routes[key]
+        cb value, (ret) => @_send [key, ret, id]
     @_emitCalls[id]? value
 
   listenTo: (source, message, cb) ->

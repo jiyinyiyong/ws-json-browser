@@ -18,3 +18,6 @@ client.connect "localhost", 3000, (ws) ->
 
   ws.onclose ->
     console.log 'server disturbed'
+
+  ws.on 'repeat', (n) ->
+    console.log 'another:', n

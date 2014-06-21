@@ -66,3 +66,9 @@ it uses `.removeListener()` internally
 ### Development
 
 Read `make.coffee` for more.
+
+### Changelog
+
+* `0.0.6`
+
+  * Fix mutiple listeners on the same event name
